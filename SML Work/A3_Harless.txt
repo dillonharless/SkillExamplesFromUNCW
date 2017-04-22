@@ -1,0 +1,111 @@
+(* Author: Dillon Harless
+ * Date: 3.27.2017 *)
+ 
+
+(* Name: listOfLists
+ * Author: Dillon Harless
+ * Date: 3.22.2017
+ * Parameters: List of integers 
+ * Base case is when length of the list of elements = 1, and it returns a list containing that element.
+ * First it pulls off the head of the list in each recursion, wraps it in a list, and puts all the lists containing one
+ * element into a list. *)
+
+fun listOfLists(myList) = if length(myList)=1 then myList::[]
+						else [hd(myList)]::listOfLists(tl(myList));
+						
+(* Name: merge
+ * Author: Dillon 
+ * Date: 3.24.2017
+ * Parameters: Two lists of integers
+ * If either list is empty, then returns the rest of the other list, even if that one is empty too.
+ * Otherwise, it compares the head of each list. Then, whichever element is smaller is placed in the first index of a list
+ * with the element to whichever it was compared in the next index. Then, that list is combined with a recursive call to merge,
+ * passing the rest of both lists. *)
+								  				
+fun merge(list1,list2) = if null(list1) then list2
+						else if null(list2) then list1
+						else if hd(list1) <= hd(list2) then hd(list1) :: merge(tl(list1),list2)
+						else hd(list2) :: merge(tl(list2),list1);
+							
+(* Name: mergePass
+ * Author: Dillon Harless
+ * Date: 3.22.2017
+ * Parameters: List of lists
+ * If the list is empty or has length one, this returns the list. Otherwise, it will  call merge, passing
+ * the first and second elements of the list, and concatenates that with a recursive call to mergePass, passing the rest of 
+ * the list that hasn't been used. *)
+
+								  
+fun mergePass(myLOL) = if length(myLOL) = 0 orelse length(myLOL) = 1 then myLOL
+						else merge(hd(myLOL),hd(tl(myLOL)))::mergePass(tl(tl(myLOL)));
+
+(* Name: mergeSort
+ * Author: Dillon Harless
+ * Date: 3.22.2017
+ * Parameters: List of lists
+ * If there is one element in the list, returns that element (which is also a list). Otherwise,
+ * calls mergeSort until the list is of length one, then returns that element (which is a list). *)				
+							
+fun mergeSort(myLOL) = if length(myLOL)=1 then hd(myLOL)
+					else mergeSort(mergePass(myLOL));
+
+(* Name: mergeSortDriver
+ * Author: Dillon Harless
+ * Date: 3.24.2017
+ * Parameters: List of integers.
+ * Starts the sort operation by calling mergeSort, and passing a list of lists (returned by the
+ * call to listOfLists in the parameters of mergeSort. *)
+ 
+fun mergeSortDriver(myList) = mergeSort(listOfLists(myList));
+
+
+(* Name: randomList
+ * Author: Matt on StackOverflow: http://stackoverflow.com/users/689394/matt. 
+ * Editor: Dillon Harless
+ * Date: 3.27.2017
+ * Parameters: List of lists randomList takes an int. 
+ * This creates a random list of user-defined length by using the information in s as the starting location for the random numbers.
+ * In this manner, the function creates a different set of numbers for each unique specified list length. *)
+ 
+fun randomList (n) =
+ let fun helper (n, s) myL =
+  if n = 0
+     then myL
+     else
+      let val min = 1
+          val max = 1000
+          val nextInt = Random.randRange(min,max)
+          val randomValue = nextInt s
+       in helper (n - 1, s) (randomValue::myL)
+      end;
+ in helper (n, Random.rand(1, 1)) [] end;
+
+
+
+
+				
+
+
+
+(* Name: Main
+ * Author: Dillon Harless
+ * Date: 3.27.2017
+ * First, sets the printlength to be able to produce all the output. Then, asks the 
+ * user the desired list length. Then creates the list of that length with random values and prints it.
+ * Then sorts that list and prints it. *)
+ 
+Control.Print.printLength := 500;
+Control.Print.linewidth := 80;
+print "Please enter the length of the list you would like to create and sort.\n";
+
+(* Below, takes in a line of input and terminates at the new line marker. valOf is necessary to get string from string option. *)
+val x = valOf(TextIO.inputLine TextIO.stdIn);
+(* Below, Int.fromString returns an int option, so valOf is required to convert it to an int. *)
+
+val myLength = valOf(Int.fromString(x));
+val myList = randomList(myLength);
+mergeSortDriver(myList);
+
+
+			
+					

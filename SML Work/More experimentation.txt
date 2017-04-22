@@ -1,0 +1,26 @@
+SML Experiments
+
+val n = 0: int;
+fun makeList(n, x) =
+				if n>50	then LOL[]
+				else
+					n = n+1
+					Random.randRange(1,100)
+					LOL@([Random.randInt s)];
+				
+val n = 0;
+print("How long should the list be?");
+val x = valOf(TextIO.inputLine TextIO.stdIn);
+val LOL = [];
+
+ 
+ fun seed () = 
+    let
+        val r = Time.toReal(Time.now()) - 1.48e9
+        val f = Real.realFloor(r)
+        val d = r - f
+        val i = Real.floor(f)
+        val j = Real.floor(1000.0*d)
+    in
+        Random.rand(i,j)
+    end;

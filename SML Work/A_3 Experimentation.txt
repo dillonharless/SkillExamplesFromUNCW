@@ -1,0 +1,31 @@
+Experimentation with sml
+
+fun arith(x,y,z) = if(x>y) then 
+						if (y>z) then x+y
+						else x+z
+					else y+z;
+					
+fun mergePass(myLOL) = if length(myLOL)=0 then []
+							else if length(myLOL)=1 then [hd(myLOL)]
+							else( if (hd(hd(myLOL)) <= hd(hd(tl(myLOL)))) then
+										if (hd(tl(hd(myLOL)))>hd(tl(hd(tl(myLOL))))) then
+												if (hd(tl(hd(myLOL)))>hd(tl(hd(tl(myLOL))))) then
+														[hd(hd(myLOL))]@[hd(hd(tl(myLOL)))]@[hd(tl(hd(tl(myLOL))))]@[hd(tl(hd(myLOL)))]@ mergePass(tl(tl(myLOL)))
+												else [hd(hd(myLOL))]@[hd(hd(tl(myLOL)))]@[hd(tl(hd(myLOL)))]@[hd(tl(hd(tl(myLOL))))] @ mergePass(tl(tl(myLOL)))
+										else ([hd(myLOL)@hd(tl(myLOL))] @ mergePass(tl(tl(myLOL))))
+								  else ( if (hd(hd(myLOL)) <= hd(tl(hd(tl(myLOL))))) then 
+											if (hd(tl(hd(myLOL))) > hd(tl(hd(tl(myLOL))))) then 
+													[hd(hd(tl(myLOL)))]@[hd(hd(myLOL))]@[hd(tl(hd(tl(myLOL))))]@[hd(tl(hd(myLOL)))] @ mergePass(tl(tl(myLOL)))
+											else ([hd(hd(tl(myLOL)))]@[hd(hd(myLOL))]@[hd(tl(hd(myLOL)))]@[hd(tl(hd(tl(myLOL))))] @ mergePass(tl(tl(myLOL))))
+										 else ([hd(myLOL)@hd(tl(myLOL))] @ mergePass(tl(tl(myLOL)))));
+									
+														
+														[hd(myLOL)@hd(tl(myLOL))] @ mergePass(tl(tl(myLOL)))
+								  else[hd(tl(myLOL))@hd(myLOL)] @ mergePass(tl(tl(myLOL))));
+								  
+(*Working the best with prof's edit, but I am losing some items for some reason)							  
+fun mergePass(myListofLists) = if length(myListofLists)=0 then []
+							else if length(myListofLists)=1 then [hd(myListofLists)]
+							else(if hd(hd(myListofLists)) <= hd(hd((tl(myListofLists)))) then 
+									[[[hd(hd(myListofLists))]@[hd(hd(tl(myListofLists)))]@[hd(tl(myListofLists))]]] @ mergePass(tl(tl(myListofLists)))
+								  else [hd(tl(myListofLists))@hd(myListofLists)] @ mergePass(tl((myListofLists))));
