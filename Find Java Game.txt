@@ -1,6 +1,0 @@
-I had a hard drive crash and lost a frogger-like game that I built in Java. I learned
-an import lesson from this - back up my files. I plan to find it from my old groupmate
-or make another soon.
-
-DH
-4-22-2017
